@@ -4,7 +4,8 @@ api_version = v1
 
 [cli]
 debug = True
-cache_token = True
+# Disabling token caching because it does not handle environment rebuilds gracefully
+cache_token = False
 
 [credentials]
 username = testu

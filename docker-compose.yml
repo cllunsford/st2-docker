@@ -3,8 +3,7 @@ web:
   ports:
     - "8080:8080"
 action:
-  image: stackstorm/st2actionrunner
-  command: /usr/local/bin/tiller
+  build: ./st2actionrunner
   environment:
     - "ST2_DB_HOST=mongodb"
     - "ST2_DB_USERNAME=admin"
@@ -16,8 +15,7 @@ action:
     - "mongodb"
     - "rabbitmq"
 api:
-  image: stackstorm/st2api
-  command: /usr/local/bin/tiller
+  build: ./st2api
   environment:
     - "ST2_DB_HOST=mongodb"
     - "ST2_DB_USERNAME=admin"
@@ -75,8 +73,7 @@ results:
     - "mongodb"
     - "rabbitmq"
 rules:
-  image: stackstorm/st2rulesengine
-  command: /usr/local/bin/tiller
+  build: ./st2rulesengine
   environment:
     - "ST2_DB_HOST=mongodb"
     - "ST2_DB_USERNAME=admin"
