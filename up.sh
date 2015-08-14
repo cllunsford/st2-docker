@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker-compose start rabbitmq
-docker-compose start mongodb
-sleep 3
+docker-compose scale rabbitmq=1
+docker-compose scale mongodb=1
+sleep 6
 docker-compose up

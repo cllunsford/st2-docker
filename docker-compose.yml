@@ -93,7 +93,7 @@ rabbitmq:
   expose:
    - "5672"
   ports:
-   - "8080:15672"
+   - "15672:15672"
 mongodb:
   image: tutum/mongodb
   environment:
