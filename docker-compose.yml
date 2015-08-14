@@ -1,0 +1,102 @@
+web:
+  build: ./st2web
+  ports:
+    - "3000:3000"
+action:
+  image: stackstorm/st2actionrunner
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+api:
+  image: stackstorm/st2api
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+  ports:
+   - "9101:9101"
+auth:
+  image: stackstorm/st2auth
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+    - "ST2_AUTH=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+  ports:
+    - "9100:9100"
+  volumes:
+    - "./st2auth/htpasswd:/etc/st2/htpasswd"
+notifier:
+  image: stackstorm/st2notifier
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+results:
+  image: stackstorm/st2resultstracker
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+rules:
+  image: stackstorm/st2rulesengine
+  command: /usr/local/bin/tiller
+  environment:
+    - "ST2_DB_HOST=mongodb"
+    - "ST2_DB_USERNAME=admin"
+    - "ST2_DB_PASSWORD=stackstorm"
+    - "ST2_DB_NAME=admin"
+    - "ST2_RMQ_HOST=rabbitmq"
+    - "ST2_DEBUG=True"
+  links:
+    - "mongodb"
+    - "rabbitmq"
+rabbitmq:
+  image: rabbitmq:management
+  hostname: rabbitmq
+  expose:
+   - "5672"
+  ports:
+   - "8080:15672"
+mongodb:
+  image: tutum/mongodb
+  environment:
+   - "MONGODB_PASS=stackstorm"
+  expose:
+   - "27017"

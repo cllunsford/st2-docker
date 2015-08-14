@@ -1,0 +1,17 @@
+[general]
+base_url = http://192.168.99.100
+api_version = v1
+
+[cli]
+debug = True
+cache_token = True
+
+[credentials]
+username = testu
+password = testp
+
+[api]
+url = http://192.168.99.100:9101/v1
+
+[auth]
+url = http://192.168.99.100:9100/
