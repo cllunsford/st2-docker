@@ -1,7 +1,7 @@
 web:
   build: ./st2web
   ports:
-    - "3000:3000"
+    - "8080:8080"
 action:
   image: stackstorm/st2actionrunner
   command: /usr/local/bin/tiller

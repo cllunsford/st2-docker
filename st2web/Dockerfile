@@ -12,5 +12,5 @@ RUN echo "error_log stderr;" >> /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
 COPY config.js /opt/st2web/build/config.js
 COPY nginx.conf /etc/nginx/sites-enabled/st2web.conf
-EXPOSE 3000
+EXPOSE 8080
 CMD ["/usr/sbin/nginx"]
